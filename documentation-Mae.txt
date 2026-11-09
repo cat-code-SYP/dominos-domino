@@ -1,0 +1,15 @@
+!DOCUMENTATIONS!
+
+9.11.26
+beginn der dokumentation.
+ich habe ganz am anfang vor dem start des project die Projekt erstellung gemananget (projektname-gruppenname, die einteilung der arbeit, die art des spiels und was die features/tätigkeiten sind). 
+projekt start. habe mich mit github auseinandergesetzt und eine Organisation auf github erstellet dammit wir besser mit issues und alle einen zugriff auf dem repo haben. 
+die mockup presentation gehalten 
+
+ich habe versucht den bestehenden code von isabela zu analysieren und zu verstehen sowie die library py.games. bin drauf gekommen das meine bisherige einstellung ich geändert hat bezügich der einfachkeit des spieles und der komplexität mit der arbeitung von py.game. ich habe es nicht geschaft den code von isabela zu verstehen sowie py.game, weil es mir zu komplex war die komplette library zu lernen damit ich damit arbeiten kann. ich war von der arbeit mit ki nicht positive gestimmt und wollte es mit 'selber' beibringen wie ich den code zu schreiben habe. doch habe ich keine zeit und motiviation diesen aufwand zu erbringen damit ich py.games verstehe. ich will meine energy in andere fächer wie pos oder dbi verwenden. 
+nach absprache mit den lehrern habe ich endlich den SINN des faches verstanden und werde meine energy dieses faches in die Dokumentation und die kommunikation des teams stecken.
+
+in dieser stunde haben wir über die zukunft des projekts gereden und haben die schwierigkeiten addressiert. wie die kommunikation, das programmieren und die arbeit mit git sowie die dokumentation. in weitere folge haben wir uns mit der presentation beschäftig die nächte woche fällig ist und haben beschlossen das es meine aufgabe wird eine presentation zu erstellen und das jeweilige handout. 
+
+to do for me: die folien/seiten bezüglich dokumentation anschauen damit ich profesioneller dokumentiere und an die presentation arbeiter, ein ticket/issue erstellen was ich machen will/werde. wenn ich die presentation fertig habe, habe ich vor darüber nochmal mit dem team zu reden ob jeder zufrieden ist und wie genau die presentation dann ablaufen wird (wer was sagt)
+ich habe auch vor etwas bei dem code beizuleisten aber weiss noch nicht was ganau
