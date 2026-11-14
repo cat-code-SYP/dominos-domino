@@ -2,7 +2,7 @@
 
 import pygame
 from sys import exit
-#mae
+
 #original values:   window resolution 2000x1300 px, 
 #                   GRID_SIZE = 1152 px, 
 #                   BLOCK_SIZE = 96 px
@@ -37,6 +37,7 @@ score_font = pygame.font.Font(None, scale(50)) #text font upto change
 GRID_X, GRID_Y = scale(750), scale(74) #distance of grid from starting point in (x, y) coodinates
 BLOCK_SIZE = scale(96)
 GRID_SIZE = BLOCK_SIZE * 12
+GRID_COLS = GRID_ROWS = 12
 #/GRID_SIZING
 
 #SURFACES
@@ -53,6 +54,8 @@ grid_background_surface.fill('#ebede6')
 
 #RECTANGLES
 domino_block = pygame.Rect(scale(200), scale(500), BLOCK_SIZE * 2, BLOCK_SIZE)
+DOMINO_START = domino_block.topleft
+occupied_cells = set()
 #/RECTANGLES
 
 def drawGrid():
@@ -68,6 +71,43 @@ def drawDomino(): #argument defined outside of function, initial coordinates har
     pygame.draw.rect(screen, '#000000', domino_block, scale(2), border_radius=scale(20))
     pygame.draw.line(screen, '#000000', (domino_block.centerx, domino_block.top), (domino_block.centerx, domino_block.bottom), scale(2))
             
+def snap_to_grid(block, start_pos, occupied=None):
+    """
+    Snaps a block (pygame.Rect) to the nearest grid cells after it is dropped.
+    - block:     the domino rect (horizontal or vertical)
+    - start_pos: (x, y) top-left position the block returns to if the drop is invalid
+    - occupied:  optional set of (col, row) cells that are already taken
+    Returns a list of the (col, row) cells the block now covers, or None if it was sent back.
+    """
+    grid_rect = pygame.Rect(GRID_X, GRID_Y, GRID_SIZE, GRID_SIZE)
+
+    # dropped outside the grid -> back to the start position
+    if not grid_rect.collidepoint(block.center):
+        block.topleft = start_pos
+        return None
+
+    # how many cells the block covers (2x1 horizontal, 1x2 vertical)
+    cells_wide = block.width // BLOCK_SIZE
+    cells_high = block.height // BLOCK_SIZE
+
+    # nearest cell for the block's top-left corner
+    col = round((block.left - GRID_X) / BLOCK_SIZE)
+    row = round((block.top - GRID_Y) / BLOCK_SIZE)
+
+    # keep the whole block inside the grid
+    col = max(0, min(col, GRID_COLS - cells_wide))
+    row = max(0, min(row, GRID_ROWS - cells_high))
+
+    # cells the block would cover
+    cells = [(col + c, row + r) for c in range(cells_wide) for r in range(cells_high)]
+
+    # cell already taken -> back to the start position
+    if occupied is not None and any(cell in occupied for cell in cells):
+        block.topleft = start_pos
+        return None
+
+    block.topleft = (GRID_X + col * BLOCK_SIZE, GRID_Y + row * BLOCK_SIZE)
+    return cells
 
 mouse_pos_old = (0, 0)
 domino_pos_old = (0, 0)
@@ -85,7 +125,12 @@ while True:
                 mouse_pos_old = pygame.mouse.get_pos()
                 domino_pos_old = domino_block.center
         if event.type == pygame.MOUSEBUTTONUP:
-            click = False
+             if event.type == pygame.MOUSEBUTTONUP:
+                if click:
+                    placed = snap_to_grid(domino_block, DOMINO_START, occupied_cells)
+                    if placed:
+                        occupied_cells.update(placed)
+                click = False
 
     if click:
         mouse_pos = pygame.mouse.get_pos()
